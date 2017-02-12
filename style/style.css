@@ -1,0 +1,7 @@
+.recipe-list, .recipe-active, .recipe-new, .nav {
+	margin-top: 20px;
+}
+
+form a {
+	margin-left: 10px;
+}
