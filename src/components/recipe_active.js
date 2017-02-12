@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { deleteRecipe } from '../actions/index';
 
 class RecipeActive extends Component {
 
@@ -30,7 +31,13 @@ class RecipeActive extends Component {
 				</ul>
 				<div className="btn-group" role="group" aria-label="recipe-action">
 					<Link className="btn btn-default">Modify</Link>
-					<button type="button" className="btn btn-default">Delete</button>
+					<button 
+						type="button" 
+						className="btn btn-default"
+						onClick={() => this.props.deleteRecipe(active)}
+					>
+						Delete
+					</button>
 				</div>
 			</div>
 		);
@@ -43,4 +50,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(RecipeActive);
+export default connect(mapStateToProps, { deleteRecipe })(RecipeActive);
