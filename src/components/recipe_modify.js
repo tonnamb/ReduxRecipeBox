@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { modifyRecipe } from '../actions/index';
+import { modifyRecipe, selectRecipe } from '../actions/index';
 import { Link } from 'react-router';
 
 class RecipeModify extends Component {
@@ -25,6 +25,7 @@ class RecipeModify extends Component {
 	onSubmit(props) {
 		const id = parseInt(this.props.params.id);
 		this.props.modifyRecipe({ ...props, id: id });
+		this.props.selectRecipe({ id: id, name: props.name, ingredients: props.ingredients.split(',').map((element) => element.trim()) });
 		this.context.router.push('/');
 	}
 
@@ -84,4 +85,4 @@ export default reduxForm({
 	form: 'RecipeModifyForm',
 	fields: ['name', 'ingredients'],
 	validate
-}, mapStateToProps, { modifyRecipe })(RecipeModify);
+}, mapStateToProps, { modifyRecipe, selectRecipe })(RecipeModify);
