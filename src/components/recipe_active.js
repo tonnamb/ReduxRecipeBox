@@ -19,18 +19,23 @@ class RecipeActive extends Component {
 		const active = this.props.active
 
 		if (!active) {
-			return <div className="col-sm-9 recipe-active">Select a recipe to get started.</div>
+			return <div className="col-sm-9 recipe-active">Select a recipe.</div>
 		}
 
 		return (
-			<div className="col-sm-6 recipe-active">
+			<div className="col-sm-9 recipe-active">
 				<h3>{active.name}</h3>
 				<h5>Ingredients:</h5>
 				<ul>
 					{this.renderList()}
 				</ul>
 				<div className="btn-group" role="group" aria-label="recipe-action">
-					<Link className="btn btn-default">Modify</Link>
+					<Link 
+						to={`modify/${active.id}`}
+						className="btn btn-default"
+					>
+						Modify
+					</Link>
 					<button 
 						type="button" 
 						className="btn btn-default"

@@ -7,22 +7,22 @@ class RecipeList extends Component {
 	renderList() {
 		return this.props.list.map((recipe) => {
 			return (
-				<li
+				<a
 					key={recipe.id}
 					className="list-group-item"
 					onClick={() => this.props.selectRecipe(recipe)}
 				>
 					{recipe.name}
-				</li>
+				</a>
 			);
 		});
 	}
 
 	render() {
 		return (
-			<ul className="list-group col-sm-3 recipe-list">
+			<div className="list-group col-sm-3 recipe-list" role="group" aria-label="recipe-list">
 				{this.renderList()}
-			</ul>
+			</div>
 		);
 	}
 }

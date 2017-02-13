@@ -1,15 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { addRecipe } from '../actions/index';
+import { modifyRecipe } from '../actions/index';
 import { Link } from 'react-router';
 
-class RecipeNew extends Component {
+class RecipeModify extends Component {
 	static contextTypes = {
 		router: PropTypes.object
 	};
 
+	componentWillMount() {
+		const { initializeForm } = this.props;
+		const id = parseInt(this.props.params.id);
+		const list = this.props.list;
+		const mod_list = list.filter((item) => {
+				if (item.id === id) {
+					return true;
+				}
+				return false;
+			})[0];
+
+		initializeForm({name: mod_list.name, ingredients: mod_list.ingredients.join(', ') });
+	}
+
 	onSubmit(props) {
-		this.props.addRecipe(props);
+		const id = parseInt(this.props.params.id);
+		this.props.modifyRecipe({ ...props, id: id });
 		this.context.router.push('/');
 	}
 
@@ -18,7 +33,7 @@ class RecipeNew extends Component {
 
 		return (
 			<form className="recipe-new" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-				<h3>Create A New Recipe</h3>
+				<h3>Modify Recipe</h3>
 
 				<div className={`form-group ${name.touched && name.invalid ? 'has-danger' : ''}`}>
 					<label>Name</label>
@@ -36,7 +51,7 @@ class RecipeNew extends Component {
 					</div>
 				</div>
 
-				<button type="submit" className="btn btn-primary">Submit</button>
+				<button type="submit" className="btn btn-primary">Modify</button>
 
 				<Link to="/" className="btn btn-danger">Cancel</Link>
 
@@ -59,8 +74,14 @@ function validate(values) {
 	return errors;
 }
 
+function mapStateToProps(state) {
+	return {
+		list: state.list.all
+	};
+}
+
 export default reduxForm({
-	form: 'RecipeNewForm',
+	form: 'RecipeModifyForm',
 	fields: ['name', 'ingredients'],
 	validate
-}, null, { addRecipe })(RecipeNew);
+}, mapStateToProps, { modifyRecipe })(RecipeModify);

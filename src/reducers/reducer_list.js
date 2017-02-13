@@ -1,12 +1,10 @@
-import { ADD_RECIPE, DELETE_RECIPE } from '../actions/index';
+import { ADD_RECIPE, DELETE_RECIPE, MODIFY_RECIPE } from '../actions/index';
 
 const INITIAL_STATE = { all: [
 		{id: 1, name: "Spaghetti", ingredients: ["Noodles", "Tomato", "Meatballs"]}, 
     {id: 2, name: "Onion Pie", ingredients: ["Onion", "Pie Crust"]}, 
     {id: 3, name: "Chicken Noodle Soup", ingredients: ["Soup", "Chicken", "Noodle"]}
   ], nextid: 4};
-
-
 
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type) {
@@ -29,7 +27,20 @@ export default function(state = INITIAL_STATE, action) {
 				}
 				return false;
 			});
-			return { all: previous_all, nextid: state.nextid }
+			return { all: previous_all, nextid: state.nextid };
+
+		case MODIFY_RECIPE:
+			const modify_id = action.payload.id;
+			const mod_ingredients = action.payload.ingredients.split(',').map((element) => element.trim());
+			const mod_name = action.payload.name;
+			var mod_all = state.all;
+			mod_all = mod_all.map((item) => {
+				if (item.id !== modify_id) {
+					return item;
+				}
+				return { id: modify_id, name: mod_name, ingredients: mod_ingredients };
+			});
+			return { all: mod_all, nextid: state.nextid };
 
 		default:
 			return state;
