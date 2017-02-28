@@ -1,10 +1,6 @@
 import { ADD_RECIPE, DELETE_RECIPE, MODIFY_RECIPE } from '../actions/index';
 
-const INITIAL_STATE = { all: [
-		{id: 1, name: "Spaghetti", ingredients: ["Noodles", "Tomato", "Meatballs"]}, 
-    {id: 2, name: "Onion Pie", ingredients: ["Onion", "Pie Crust"]}, 
-    {id: 3, name: "Chicken Noodle Soup", ingredients: ["Soup", "Chicken", "Noodle"]}
-  ], nextid: 4};
+const INITIAL_STATE = { all: [], nextid: 1};
 
 export default function(state = INITIAL_STATE, action) {
 	switch(action.type) {
